@@ -11,7 +11,9 @@ public class Enemy : MonoBehaviour
     NavMeshAgent _navMeshAgent;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
+        _destination = GameObject.Find("Base").transform;
         _navMeshAgent = this.GetComponent<NavMeshAgent>();
 
         if (_navMeshAgent == null)

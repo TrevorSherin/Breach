@@ -22,6 +22,7 @@ TagManager:
   - ItemMallSlot
   - Pet
   - NpcPetReviveSlot
+  - enemy
   layers:
   - Default
   - TransparentFX
