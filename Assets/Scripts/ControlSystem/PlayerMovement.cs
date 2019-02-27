@@ -28,16 +28,9 @@ public class PlayerMovement : MonoBehaviour
         if(groundPlane.Raycast(cameraRay, out rayLength))
         {
             Vector3 pointToLook = cameraRay.GetPoint(rayLength);
-            //Debug.DrawLine(cameraRay.origin, pointToLook, Color.blue);
-            transform.LookAt(pointToLook);
+            
+            transform.LookAt(new Vector3(pointToLook.x,transform.position.y,pointToLook.z));
         }
-        
-        /*float hAxis = Input.GetAxis("Horizontal");
-        float vAxis = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(hAxis, 0, vAxis) * moveSpeed * Time.deltaTime;
-        print (rig);
-        rig.MovePosition(transform.position + movement);*/
     }
 
     void FixedUpdate()

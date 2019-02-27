@@ -50,5 +50,10 @@ public class GameUI : MonoBehaviour {
         {
             SetToBuildMode();
         }
+
+        if (state == State.Building)
+        {
+            //if
+        }
 	}
 }
