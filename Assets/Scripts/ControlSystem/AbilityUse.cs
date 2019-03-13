@@ -12,11 +12,12 @@ public class AbilityUse : MonoBehaviour {
     public float forceMultiplier;
     private Button button;
     private Image fillImage;
+    private Camera mainCamera;
 
     public void OnAbilityUse(GameObject btn)
     {
         fillImage = btn.transform.GetChild(0).gameObject.GetComponent<Image>();
-        UnityEngine.Debug.Log(btn.transform.GetChild(0).gameObject.name);
+        //UnityEngine.Debug.Log(btn.transform.GetChild(0).gameObject.name);
         button = btn.GetComponent<Button>();
         button.interactable = false;
         fillImage.fillAmount = 1;
@@ -24,22 +25,20 @@ public class AbilityUse : MonoBehaviour {
         cooldownTimer.Start();
 
         GameObject go = Instantiate<GameObject>(fireballPrefab);
-        go.transform.position = this.transform.position;
+        go.transform.position = new Vector3(this.transform.position.x,this.transform.position.y+1f  ,this.transform.position.z);
         fireball = new FireBall();
-        fireball.AbilityPrefab = go;
-        //fireball.Activate;
-
-        
+        fireball.AbilityPrefab = go;  
 
         StartCoroutine(SpinImage());
+        fireball.Activate(gameObject);
     }
 
     private IEnumerator SpinImage()
     {
-        UnityEngine.Debug.Log(fireball.Cooldown);
+        //UnityEngine.Debug.Log(fireball.Cooldown);
         while (cooldownTimer.IsRunning && cooldownTimer.Elapsed.TotalSeconds < fireball.Cooldown)
         {
-            UnityEngine.Debug.Log(fillImage.fillAmount);
+            //UnityEngine.Debug.Log(fillImage.fillAmount);
             fillImage.fillAmount = ((float)cooldownTimer.Elapsed.TotalSeconds / fireball.Cooldown);
             yield return null;
         }
@@ -50,4 +49,6 @@ public class AbilityUse : MonoBehaviour {
 
         yield return null;
     }
+
+    
 }
