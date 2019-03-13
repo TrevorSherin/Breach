@@ -65,10 +65,7 @@ public class Ability{
     {
         foreach (AbilityBehaviours b in Behaviours)
         {
-            if (b.StartTime == global::AbilityBehaviours.BehaviourStartTimes.Beginning)
-            {
-                b.Activate(player, abilityPrefab);
-            }
+            b.Activate(player, abilityPrefab);
         }
     }
 }

@@ -7,7 +7,6 @@ public class AreaOfEffect : AbilityBehaviours {
 
     private const string behaviourName = "Area of Effect";
     private const string behaviourDescription = "An area of effect attack";
-    private const BehaviourStartTimes startTime = BehaviourStartTimes.Beginning;
     //private const Sprite icon = Resources.Load();
 
     private float areaRadius;
@@ -16,10 +15,11 @@ public class AreaOfEffect : AbilityBehaviours {
     private Stopwatch durationTimer = new Stopwatch();
     private bool isOccupied;
     private float damageTickDuration;
+    private Camera mainCamera;
 
 
     public AreaOfEffect(float radius, float duration, float damage)
-        : base(new BasicInfo(behaviourName, behaviourDescription), startTime)
+        : base(new BasicInfo(behaviourName, behaviourDescription))
     {
         areaRadius = radius;
         effectDuration = duration;
@@ -27,18 +27,19 @@ public class AreaOfEffect : AbilityBehaviours {
         isOccupied = false;
     }
 
-    public override void Activate(GameObject playerObject, GameObject objectHit)
+    public override void Activate(GameObject playerObject, GameObject abilityPrefab)
     {
         SphereCollider sc;
-        if (this.gameObject.GetComponent<SphereCollider>() == null)
-            sc = this.gameObject.AddComponent<SphereCollider>();
+        Vector3 target = getTarget();
+        if (abilityPrefab.GetComponent<SphereCollider>() == null)
+            sc = abilityPrefab.AddComponent<SphereCollider>();
         else
-            sc = this.gameObject.GetComponent<SphereCollider>();
+            sc = abilityPrefab.GetComponent<SphereCollider>();
 
         sc.radius = areaRadius;
         sc.isTrigger = true;
 
-        StartCoroutine(AOE());
+        //StartCoroutine(AOE());
     }
 
     private IEnumerator AOE()
@@ -49,7 +50,7 @@ public class AreaOfEffect : AbilityBehaviours {
         {
             if (isOccupied)
             {
-                //do damage
+                UnityEngine.Debug.Log("HIT");
             }
 
             yield return new WaitForSeconds(damageTickDuration);
@@ -59,6 +60,16 @@ public class AreaOfEffect : AbilityBehaviours {
         durationTimer.Reset();
 
         yield return null;
+    }
+
+    private Vector3 getTarget()
+    {
+        mainCamera = FindObjectOfType<Camera>();
+        Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        float rayLength;
+        groundPlane.Raycast(cameraRay, out rayLength);
+        return cameraRay.GetPoint(rayLength);
     }
 
     private void OnTriggerEnter(Collider other)

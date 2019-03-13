@@ -5,19 +5,10 @@ using UnityEngine;
 public class AbilityBehaviours : MonoBehaviour
 {
     private BasicInfo basicInfo;
-    private BehaviourStartTimes startTime;
 
-    public AbilityBehaviours(BasicInfo bBasicInfo, BehaviourStartTimes bStartTime)
+    public AbilityBehaviours(BasicInfo bBasicInfo)
     {
         basicInfo = bBasicInfo;
-        startTime = bStartTime;
-    }
-
-    public enum BehaviourStartTimes
-    {
-        Beginning,
-        Middle,
-        End
     }
 
     public virtual void Activate(GameObject playerObject, GameObject objectHit)
@@ -29,10 +20,4 @@ public class AbilityBehaviours : MonoBehaviour
     {
         get { return basicInfo; }
     }
-
-    public BehaviourStartTimes StartTime
-    {
-        get { return startTime; }
-    }
-
 }
