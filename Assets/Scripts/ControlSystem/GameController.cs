@@ -38,4 +38,17 @@ public class GameController : MonoBehaviour {
 
         gameOverPanel.SetActive(true);
     }
+
+    public void Restart()
+    {
+        GameObject[] towers = GameObject.FindGameObjectsWithTag("tower");
+        foreach (GameObject tower in towers)
+            Destroy(tower);
+        GameObject.Find("PlayerBase").GetComponent<PlayerBase>().ResetHealth();
+        GameObject.Find("PlayerContainer").GetComponent<PlayerMovement>().Reset();
+        this.GetComponent<GameUI>().Reset();
+        baseHpController.Reset();
+        waveSpawner.Reset();
+        gameOverPanel.SetActive(false);
+    }
 }

@@ -14,6 +14,7 @@ public class GameUI : MonoBehaviour {
     public State state { get; private set; }
     public GameObject towerMarker;
     public int money;
+    private int startingMoney;
     private MoneyController moneyController;
     private BaseHpController baseHpController;
     private int baseHealth;
@@ -81,7 +82,7 @@ public class GameUI : MonoBehaviour {
         baseHealth = 0;
         moneyController = GameObject.Find("MoneyPanel").GetComponent<MoneyController>();
         baseHpController = GameObject.Find("BaseHpPanel").GetComponent<BaseHpController>();
-        money = 500;
+        startingMoney = money = 500;
         towerMarker.SetActive(false);
     }
 	
@@ -114,5 +115,10 @@ public class GameUI : MonoBehaviour {
         {
             //if
         }
-	}
+    }
+    public void Reset()
+    {
+        SetToNormalMode();
+        money = startingMoney;
+    }
 }

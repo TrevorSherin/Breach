@@ -33,6 +33,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        transform.position = new Vector3(0, 0, 0);
+        transform.rotation = new Quaternion(0, 0, 0, 0);
+    }
+
     void FixedUpdate()
     {
         rig.velocity = moveVelocity;

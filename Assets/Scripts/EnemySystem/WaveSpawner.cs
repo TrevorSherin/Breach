@@ -149,6 +149,13 @@ public class WaveSpawner : MonoBehaviour {
         set { gameWon = value; }
     }
 
+    public void Reset()
+    {
+        gameWon = false;
+        gameOver = false;
+        nextWave = 0;
+    }
+
     void SpawnEnemy(Transform enemy)
     {
         Debug.Log("Spawning Enemy: " + enemy.name);

@@ -38,4 +38,9 @@ public class BaseHpController : MonoBehaviour {
         get { return baseAlive; }
         set { baseAlive = value; }
     }
+
+    public void Reset()
+    {
+        baseAlive = true;
+    }
 }

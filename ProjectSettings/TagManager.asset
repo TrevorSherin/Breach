@@ -23,6 +23,8 @@ TagManager:
   - Pet
   - NpcPetReviveSlot
   - enemy
+  - Undefined
+  - tower
   layers:
   - Default
   - TransparentFX
