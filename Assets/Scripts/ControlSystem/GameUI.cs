@@ -14,7 +14,6 @@ public class GameUI : MonoBehaviour {
     public State state { get; private set; }
     public GameObject towerMarker;
     public int money;
-    private PlaceTower buildButton;
     private MoneyController moneyController;
     private BaseHpController baseHpController;
     private int baseHealth;
@@ -28,10 +27,11 @@ public class GameUI : MonoBehaviour {
         state = newState;
     }
 
-    public void TryBuilding(int towerCost)
+    public void TryBuilding(int towerCost, GameObject towerType)
     {
         if (money >= towerCost)
         {
+            towerMarker.GetComponent<TowerPlacementMarker>().SetTower(towerType);
             SetToBuildMode();
         }
     }
@@ -52,7 +52,6 @@ public class GameUI : MonoBehaviour {
             SetState(State.Normal);
         }
         DestroyTowerMarker();
-        buildButton.SetNotBuilding();
     }
 
     void CreateTowerMarker()
@@ -84,16 +83,17 @@ public class GameUI : MonoBehaviour {
         baseHpController = GameObject.Find("BaseHpPanel").GetComponent<BaseHpController>();
         money = 500;
         towerMarker.SetActive(false);
-        buildButton = GameObject.Find("BuildTowerButton").GetComponent<PlaceTower>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (buildButton.IsBuilding())
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SetToBuildMode();
+            if (state == State.Building)
+            {
+                SetToNormalMode();
+            }
         }
-
         if (baseHealth != GameObject.Find("PlayerBase").GetComponent<PlayerBase>().GetHealth)
         {
             baseHealth = GameObject.Find("PlayerBase").GetComponent<PlayerBase>().GetHealth;

@@ -30,7 +30,7 @@ public class TowerPlacementMarker : MonoBehaviour {
         
         if (Physics.Raycast (ray, out hitInfo))
         {
-            this.transform.position = hitInfo.point;
+            this.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y + 0.05f, hitInfo.point.z);
         }
 
         if (Input.GetMouseButtonDown (0))
@@ -45,6 +45,11 @@ public class TowerPlacementMarker : MonoBehaviour {
         Vector3 targetVector = this.transform.position - gameCamera.transform.position;
         transform.rotation = Quaternion.LookRotation(targetVector, gameCamera.transform.rotation * Vector3.up);
 
+    }
+
+    public void SetTower(GameObject newTower)
+    {
+        tower = newTower;
     }
 
     public void BuildTower()
