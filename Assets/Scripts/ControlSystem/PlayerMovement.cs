@@ -3,20 +3,23 @@
 public class PlayerMovement : MonoBehaviour
 {
 
-    public float moveSpeed = 10;
+    public float moveSpeed = 5;
     private Rigidbody rig;
 
     private Vector3 moveInput;
     private Vector3 moveVelocity;
+    private Vector3 currentVelocity;
     private Camera mainCamera;
+    private Animator animator;
 
-    void Start ()
+    void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         rig = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
-	}
-	
-	void Update ()
+    }
+
+    void Update()
     {
         moveInput = new Vector3(-Input.GetAxisRaw("Vertical"), 0f, Input.GetAxisRaw("Horizontal"));
         moveVelocity = moveInput * moveSpeed;
@@ -25,11 +28,11 @@ public class PlayerMovement : MonoBehaviour
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         float rayLength;
 
-        if(groundPlane.Raycast(cameraRay, out rayLength))
+        if (groundPlane.Raycast(cameraRay, out rayLength))
         {
             Vector3 pointToLook = cameraRay.GetPoint(rayLength);
-            
-            transform.LookAt(new Vector3(pointToLook.x,transform.position.y,pointToLook.z));
+
+            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
         }
     }
 
@@ -42,5 +45,24 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         rig.velocity = moveVelocity;
+        checkDirection();
+    }
+
+    private void checkDirection()
+    {
+
+        //x=- is left //x=+ is right //z=- is back // z=+ is forward
+        currentVelocity = this.GetComponent<Transform>().InverseTransformDirection(this.GetComponent<Rigidbody>().velocity);
+        animator.SetFloat("VelX", currentVelocity.x/moveSpeed);
+        animator.SetFloat("VelZ", currentVelocity.z/moveSpeed);
+        //if (currentVelocity.x >= 2)
+        //    animator.SetFloat("VelX", );//right
+        //if (currentVelocity.x <= -2)
+        //    ;//left
+        //if (currentVelocity.z >= 2)
+        //    ;//forward
+        //if (currentVelocity.z <= -2)
+        //    ;//backward
+
     }
 }
