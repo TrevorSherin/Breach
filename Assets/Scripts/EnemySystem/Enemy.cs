@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        speed = 3.5f;
         _destination = GameObject.Find("PlayerBase").transform;
         _navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
         health = 50;
