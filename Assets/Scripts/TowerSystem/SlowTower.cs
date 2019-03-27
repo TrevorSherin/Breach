@@ -16,6 +16,7 @@ public class SlowTower : MonoBehaviour
     private float spin = 0f;
     private float spinCounter = 0f;
     private int enemyCount;
+    private Animator slowAnimator;
 
     [Header("Setup")]
     public string enemyTag = "enemy";
@@ -27,6 +28,7 @@ public class SlowTower : MonoBehaviour
 
     void Start()
     {
+        slowAnimator = this.GetComponent<Animator>();
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
         enemyCount = 0;
     }
@@ -50,8 +52,13 @@ public class SlowTower : MonoBehaviour
     void Update()
     {
         if (spinCounter <= 0)
+        {
+            slowAnimator.SetBool("IsActive", false);
             return;
+        }
+            
         spinCounter -= 1f * Time.deltaTime;
+        slowAnimator.SetBool("IsActive", true);
         spin += 200 * Time.deltaTime;
         partToRotate.rotation = Quaternion.Euler(0f, spin, 0f);
 

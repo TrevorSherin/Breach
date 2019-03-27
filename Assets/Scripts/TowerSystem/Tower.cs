@@ -13,14 +13,17 @@ public class Tower : MonoBehaviour {
 
     [Header("Setup")]
     public string enemyTag = "enemy";
-    public Transform partToRotate;
+    public Transform headPivot;
+    public Transform cannonPivot;
     public float turnSpeed = 10f;
     public GameObject bulletPrefab;
     public Transform firePoint;
+    private Animator projAnimator;
 
 
     void Start() {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        projAnimator = this.GetComponent<Animator>();
     }
 
     void UpdateTarget()
@@ -54,11 +57,15 @@ public class Tower : MonoBehaviour {
 
         Vector3 dir = target.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(dir);
-        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime*turnSpeed).eulerAngles;
-        partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        Vector3 rotation = Quaternion.Lerp(headPivot.rotation, lookRotation, Time.deltaTime*turnSpeed).eulerAngles;
+        headPivot.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        Vector3 cannonRotation = Quaternion.Lerp(cannonPivot.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+        //cannonPivot.rotation = Quaternion.Euler(cannonRotation.x, cannonRotation.y, cannonRotation.z);
 
-        if(fireReload <= 0f)
+        if (fireReload <= 0f)
         {
+            projAnimator.ResetTrigger("Shoot");
+            projAnimator.SetTrigger("Shoot");
             Shoot();
             fireReload = 1f / fireRate;
         }
