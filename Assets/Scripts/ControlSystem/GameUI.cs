@@ -62,6 +62,7 @@ public class GameUI : MonoBehaviour {
 
     void DestroyTowerMarker()
     {
+        towerMarker.GetComponent<TowerPlacementMarker>().Reset();
         towerMarker.SetActive(false);
     }
 

@@ -24,7 +24,7 @@ public class Tower : MonoBehaviour {
 
     void Start() {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
-        projAnimator = this.GetComponent<Animator>();
+        projAnimator = this.GetComponentInChildren<Animator>();
     }
 
     void UpdateTarget()
@@ -86,6 +86,12 @@ public class Tower : MonoBehaviour {
     {
         get { return cost; }
         set { cost = value; }
+    }
+
+    public float Range
+    {
+        get { return range; }
+        set { range = value; }
     }
 
     private void OnDrawGizmosSelected()

@@ -82,6 +82,12 @@ public class AoeTower : MonoBehaviour
         set { cost = value; }
     }
 
+    public float Range
+    {
+        get { return range; }
+        set { range = value; }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;

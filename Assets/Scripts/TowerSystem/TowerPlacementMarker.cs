@@ -5,11 +5,15 @@ using UnityEngine;
 public class TowerPlacementMarker : MonoBehaviour {
 
     public Vector2 direction;
+    private Vector3 startPosition;
     public Camera gameCamera;
     public GameObject tower;
+    public float range;
+    private int cost = 0;
 
     void Start()
     {
+        startPosition = this.transform.position;
         gameCamera = GameObject.Find("GameCamera").GetComponent<Camera>();
     }
 
@@ -49,20 +53,36 @@ public class TowerPlacementMarker : MonoBehaviour {
 
     public void SetTower(GameObject newTower)
     {
+        float range;
         tower = newTower;
+        if (tower.GetComponent<Tower>() != null)
+        {
+            cost = tower.GetComponent<Tower>().towerCost;
+            range = tower.GetComponent<Tower>().Range;
+            this.GetComponent<SpriteRenderer>().size = new Vector2(range, range);
+        }
+        if (tower.GetComponent<SlowTower>() != null)
+        {
+            cost = tower.GetComponent<SlowTower>().towerCost;
+            range = tower.GetComponent<SlowTower>().Range;
+            this.GetComponent<SpriteRenderer>().size = new Vector2(range, range);
+        }
+        if (tower.GetComponent<AoeTower>() != null)
+        {
+            cost = tower.GetComponent<AoeTower>().towerCost;
+            range = tower.GetComponent<AoeTower>().Range;
+            this.GetComponent<SpriteRenderer>().size = new Vector2(range, range);
+        }
     }
 
     public void BuildTower()
     {
-        int cost = 0;
-        if (tower.GetComponent<Tower>() != null)
-            cost = tower.GetComponent<Tower>().towerCost;
-        if (tower.GetComponent<SlowTower>() != null)
-            cost = tower.GetComponent<SlowTower>().towerCost;
-        if (tower.GetComponent<AoeTower>() != null)
-            cost = tower.GetComponent<AoeTower>().towerCost;
-
         GameObject.Find("GameCamera").GetComponent<GameUI>().useMoney(cost);
         Instantiate(tower, this.transform.position, new Quaternion(0,0,0,0));
+    }
+
+    public void Reset()
+    {
+        this.transform.position = startPosition;
     }
 }

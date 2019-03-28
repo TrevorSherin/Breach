@@ -13,15 +13,18 @@ public class abilityButtons : MonoBehaviour {
         buttonImage = gameObject.transform.GetChild(0).gameObject.GetComponent<Image>();
         a = playerObject.GetComponent<AbilityUse>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        if(buttonImage.fillAmount == 0)
+
+    // Update is called once per frame
+    void Update() {
+        if (buttonImage != null)
         {
-            if(Input.GetKeyDown(KeyCode.F))
+            if (buttonImage.fillAmount == 0)
             {
-                a.OnAbilityUse(gameObject);
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    a.OnAbilityUse(gameObject);
+                }
             }
         }
-	}
+    }
 }

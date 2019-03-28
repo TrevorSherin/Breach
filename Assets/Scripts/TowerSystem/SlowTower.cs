@@ -71,6 +71,12 @@ public class SlowTower : MonoBehaviour
         set { cost = value; }
     }
 
+    public float Range
+    {
+        get { return range; }
+        set { range = value; }
+    }
+
     public void Spin()
     {
         spinCounter = 1f;
