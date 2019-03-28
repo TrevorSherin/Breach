@@ -17,10 +17,15 @@ public class AoeTower : MonoBehaviour
     public int damage = 5;
     private float spinCounter = 0f;
     private int enemyCount;
+    public int spinSpeed;
+    public int cost;
 
     [Header("Setup")]
     public string enemyTag = "enemy";
-    public Transform partToRotate;
+    public Transform blade1;
+    public Transform blade2;
+    public Transform blade3;
+    public Transform blade4;
     //public float turnSpeed = 10f;
     //public GameObject bulletPrefab;
     //public Transform firePoint;
@@ -58,14 +63,23 @@ public class AoeTower : MonoBehaviour
         if (spinCounter <= 0)
             return;
         spinCounter -= 1f * Time.deltaTime;
-        spin += 200 * Time.deltaTime;
-        partToRotate.rotation = Quaternion.Euler(0f, spin, 0f);
+        spin += spinSpeed * Time.deltaTime;
+        blade1.rotation = Quaternion.Euler(0f, spin, 0f);
+        blade2.rotation = Quaternion.Euler(0f, -spin, 0f);
+        blade3.rotation = Quaternion.Euler(0f, spin, 0f);
+        blade4.rotation = Quaternion.Euler(0f, -spin, 0f);
 
     }
 
     public void Spin()
     {
         spinCounter = 1f;
+    }
+
+    public int towerCost
+    {
+        get { return cost; }
+        set { cost = value; }
     }
 
     private void OnDrawGizmosSelected()

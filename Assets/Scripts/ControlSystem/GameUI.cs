@@ -80,8 +80,8 @@ public class GameUI : MonoBehaviour {
     void Start ()
     {
         baseHealth = 0;
-        moneyController = GameObject.Find("MoneyPanel").GetComponent<MoneyController>();
-        baseHpController = GameObject.Find("BaseHpPanel").GetComponent<BaseHpController>();
+        moneyController = GameObject.Find("GoldInfo").GetComponent<MoneyController>();
+        baseHpController = GameObject.Find("BaseInfo").GetComponent<BaseHpController>();
         startingMoney = money = 500;
         towerMarker.SetActive(false);
     }

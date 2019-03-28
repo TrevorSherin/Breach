@@ -11,7 +11,7 @@ public class MoneyController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         money = 0;
-        moneyText = transform.GetChild(0).gameObject.GetComponent<Text>();
+        moneyText = transform.GetChild(1).gameObject.GetComponent<Text>();
 
     }
 	
@@ -23,7 +23,7 @@ public class MoneyController : MonoBehaviour {
     public void SetMoney(int moneyToSet)
     {
         money = moneyToSet;
-        moneyText.text = "GOLD: " + money;
+        moneyText.text = "" + money;
     }
 
     public int CheckMoney

@@ -54,7 +54,15 @@ public class TowerPlacementMarker : MonoBehaviour {
 
     public void BuildTower()
     {
-        GameObject.Find("GameCamera").GetComponent<GameUI>().useMoney(250);
+        int cost = 0;
+        if (tower.GetComponent<Tower>() != null)
+            cost = tower.GetComponent<Tower>().towerCost;
+        if (tower.GetComponent<SlowTower>() != null)
+            cost = tower.GetComponent<SlowTower>().towerCost;
+        if (tower.GetComponent<AoeTower>() != null)
+            cost = tower.GetComponent<AoeTower>().towerCost;
+
+        GameObject.Find("GameCamera").GetComponent<GameUI>().useMoney(cost);
         Instantiate(tower, this.transform.position, new Quaternion(0,0,0,0));
     }
 }

@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 114833960112286430}
   m_Layer: 0
   m_Name: ProjTower
-  m_TagString: Untagged
+  m_TagString: tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -624,6 +624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 6
   fireRate: 1
+  cost: 250
   enemyTag: enemy
   headPivot: {fileID: 4362111098948864}
   cannonPivot: {fileID: 4540506375364130}

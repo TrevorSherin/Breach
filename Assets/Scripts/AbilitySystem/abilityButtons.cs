@@ -18,7 +18,7 @@ public class abilityButtons : MonoBehaviour {
 	void Update () {
         if(buttonImage.fillAmount == 0)
         {
-            if(Input.GetKeyDown(KeyCode.Q))
+            if(Input.GetKeyDown(KeyCode.F))
             {
                 a.OnAbilityUse(gameObject);
             }

@@ -1,25 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
     Transform _destination;
-    public int health;
+    public float maxHealth;
+    public float health;
     public float speed;
     public bool isSlowed;
     private float slowTime;
+    private Animator animator;
+    private float animatorSpeed;
+    private Canvas healthCanvas;
+    private Image healthImage;
 
     NavMeshAgent _navMeshAgent;
 
 	// Use this for initialization
 	void Start ()
     {
+        healthCanvas = GetComponentInChildren<Canvas>();
+        healthImage = GetComponentInChildren<Image>();
+        animator = this.GetComponent<Animator>();
+        maxHealth = health;
+        animatorSpeed = animator.speed;
         _destination = GameObject.Find("PlayerBase").transform;
         _navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
-        health = 50;
         slowTime = 0f;
         isSlowed = false;
         if (_navMeshAgent == null)
@@ -35,13 +45,19 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        healthImage.fillAmount = health / maxHealth;
+        healthCanvas.transform.forward = Camera.main.transform.forward;
         if (slowTime > 0)
         {
             slowTime -= 1f * Time.deltaTime;
             SetSpeed(speed / 2);
+            animator.speed = animatorSpeed / 2;
         }
         else
+        {
             SetSpeed(speed);
+            animator.speed = animatorSpeed;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -80,8 +96,10 @@ public class Enemy : MonoBehaviour
 
     public void Hit(int damage)
     {
+
         //_navMeshAgent.
         health -= damage;
+        
         if (health <= 0)
         {
             GameObject.Find("GameCamera").GetComponent<GameUI>().addMoney(20);

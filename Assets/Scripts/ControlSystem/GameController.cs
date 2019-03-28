@@ -6,13 +6,20 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 
     private WaveSpawner waveSpawner;
+    private bool isPaused;
     private GameObject gameOverPanel;
+    private GameObject pauseMenu;
     private BaseHpController baseHpController;
+    private PlayerMovement playerMoveScript;
 
 	// Use this for initialization
 	void Start () {
+        playerMoveScript = GameObject.Find("PlayerContainer").GetComponent<PlayerMovement>();
+        pauseMenu = GameObject.Find("PauseMenu");
+        pauseMenu.SetActive(false);
+        isPaused = false;
         gameOverPanel = GameObject.Find("GameOverPanel");
-        baseHpController = GameObject.Find("BaseHpPanel").GetComponent<BaseHpController>();
+        baseHpController = GameObject.Find("BaseInfo").GetComponent<BaseHpController>();
         gameOverPanel.SetActive(false);
         waveSpawner = transform.GetComponent<WaveSpawner>();
 	}
@@ -50,5 +57,28 @@ public class GameController : MonoBehaviour {
         baseHpController.Reset();
         waveSpawner.Reset();
         gameOverPanel.SetActive(false);
+    }
+
+    public void Pause()
+    {
+        if(isPaused)
+        {
+            playerMoveScript.enabled = true;
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1;
+            isPaused = false;
+        }
+        else
+        {
+            playerMoveScript.enabled = false;
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0;
+            isPaused = true;
+        }
+    }
+
+    public void Quit()
+    {
+
     }
 }

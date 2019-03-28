@@ -5,15 +5,17 @@ using UnityEngine.UI;
 
 public class BaseHpController : MonoBehaviour {
 
-    private int baseHP;
+    private float baseHP;
     private Text baseHpText;
     private bool baseAlive;
+    private Image healthbar;
 
 	// Use this for initialization
 	void Start () {
         baseHP = 0;
         baseAlive = true;
         baseHpText = transform.GetChild(0).gameObject.GetComponent<Text>();
+        healthbar = GameObject.Find("HealthBarImage").GetComponent<Image>();
     }
 	
 	// Update is called once per frame
@@ -23,12 +25,13 @@ public class BaseHpController : MonoBehaviour {
     public void SetHP(int hpToSet)
     {
         baseHP = hpToSet;
-        baseHpText.text = "Base HP: " + baseHP;
+        baseHpText.text = "Base Health: " + baseHP;
+        healthbar.fillAmount = baseHP / 500f;
         if (baseHP == 0)
             baseAlive = false;
     }
 
-    public int CheckHP
+    public float CheckHP
     {
         get { return baseHP; }
     }

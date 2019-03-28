@@ -12,6 +12,7 @@ public class SlowTower : MonoBehaviour
     [Header("Attributes")]
     public float range = 4f;
     public float fireRate = 1f;
+    public int cost;
     private float fireReload = 0f;
     private float spin = 0f;
     private float spinCounter = 0f;
@@ -62,6 +63,12 @@ public class SlowTower : MonoBehaviour
         spin += 200 * Time.deltaTime;
         partToRotate.rotation = Quaternion.Euler(0f, spin, 0f);
 
+    }
+
+    public int towerCost
+    {
+        get { return cost; }
+        set { cost = value; }
     }
 
     public void Spin()

@@ -26,14 +26,16 @@ public class WaveSpawner : MonoBehaviour {
     private SpawnState state = SpawnState.Completed;
     private bool gameOver = false;
     private GameObject nextWaveButton;
+    private GameObject wavePanel;
     private Text waveInfo;
     private bool gameWon = false;
 
 
     void Start()
     {
+        wavePanel = GameObject.Find("WavePanel");
         nextWaveButton = GameObject.Find("NextWaveButton");
-        nextWaveButton.SetActive(true);
+        wavePanel.SetActive(true);
         waveInfo = GameObject.Find("WaveInfo").GetComponent<Text>();
         waveCountdown = timeBetweenWaves;
     }
@@ -127,12 +129,12 @@ public class WaveSpawner : MonoBehaviour {
 
     void DisplayButton()
     {
-        nextWaveButton.SetActive(true);
+        wavePanel.SetActive(true);
     }
     
     public void StartNextWave()
     {
-        nextWaveButton.SetActive(false);
+        wavePanel.SetActive(false);
         state = SpawnState.Ready;
         waveCountdown = timeBetweenWaves;
     }
