@@ -11,9 +11,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 currentVelocity;
     private Camera mainCamera;
     private Animator animator;
+    private Vector3 startPos;
 
     void Start()
     {
+        startPos = this.transform.position;
         animator = GetComponentInChildren<Animator>();
         rig = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
@@ -38,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Reset()
     {
-        transform.position = new Vector3(0, 0, 0);
+        transform.position = startPos;
         transform.rotation = new Quaternion(0, 0, 0, 0);
     }
 

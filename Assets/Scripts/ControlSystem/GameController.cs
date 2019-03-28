@@ -49,14 +49,19 @@ public class GameController : MonoBehaviour {
     public void Restart()
     {
         GameObject[] towers = GameObject.FindGameObjectsWithTag("tower");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
         foreach (GameObject tower in towers)
             Destroy(tower);
+        foreach (GameObject enemy in enemies)
+            Destroy(enemy);
         GameObject.Find("PlayerBase").GetComponent<PlayerBase>().ResetHealth();
         GameObject.Find("PlayerContainer").GetComponent<PlayerMovement>().Reset();
         this.GetComponent<GameUI>().Reset();
         baseHpController.Reset();
         waveSpawner.Reset();
         gameOverPanel.SetActive(false);
+        if (isPaused)
+            Pause();
     }
 
     public void Pause()
