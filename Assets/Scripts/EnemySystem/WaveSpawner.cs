@@ -15,6 +15,7 @@ public class WaveSpawner : MonoBehaviour {
         public Transform enemy;
         public int count;
         public float rate;
+        public float enemyHealth;
     }
 
     public Wave[] waves;
@@ -118,7 +119,7 @@ public class WaveSpawner : MonoBehaviour {
 
         for(int i = 0; i < wave.count; i++)
         {
-            SpawnEnemy(wave.enemy);
+            SpawnEnemy(wave.enemy, wave.enemyHealth);
             yield return new WaitForSeconds(1f / wave.rate);
         }
 
@@ -158,10 +159,11 @@ public class WaveSpawner : MonoBehaviour {
         nextWave = 0;
     }
 
-    void SpawnEnemy(Transform enemy)
+    void SpawnEnemy(Transform enemy, float health)
     {
-        Debug.Log("Spawning Enemy: " + enemy.name);
+        //Debug.Log("Spawning Enemy: " + enemy.name);
         Transform sp = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
         Instantiate(enemy, sp.position, sp.rotation);
+        enemy.GetComponent<Enemy>().Health = health;
     }
 }

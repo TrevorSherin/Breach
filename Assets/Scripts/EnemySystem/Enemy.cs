@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     Transform _destination;
-    public float maxHealth;
+    private float maxHealth;
     public float health;
     public float speed;
     public bool isSlowed;
@@ -87,6 +87,11 @@ public class Enemy : MonoBehaviour
     public void Slow()
     {
         slowTime = 1f;
+    }
+
+    public float Health
+    {
+        set { health = value; }
     }
 
     private void SetSpeed(float speedToSet)
