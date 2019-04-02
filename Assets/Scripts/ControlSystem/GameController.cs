@@ -7,22 +7,26 @@ public class GameController : MonoBehaviour {
 
     private WaveSpawner waveSpawner;
     private bool isPaused;
+    private int highscore;
     private GameObject gameOverPanel;
     private GameObject pauseMenu;
     private BaseHpController baseHpController;
     private PlayerMovement playerMoveScript;
+    private ScoreController scoreController;
 
 	// Use this for initialization
 	void Start () {
         playerMoveScript = GameObject.Find("PlayerContainer").GetComponent<PlayerMovement>();
         pauseMenu = GameObject.Find("PauseMenu");
+        waveSpawner = transform.GetComponent<WaveSpawner>();
+        baseHpController = GameObject.Find("BaseInfo").GetComponent<BaseHpController>();
+        scoreController = GameObject.Find("ScoreInfo").GetComponent<ScoreController>();
         pauseMenu.SetActive(false);
         isPaused = false;
         gameOverPanel = GameObject.Find("GameOverPanel");
-        baseHpController = GameObject.Find("BaseInfo").GetComponent<BaseHpController>();
         gameOverPanel.SetActive(false);
-        waveSpawner = transform.GetComponent<WaveSpawner>();
-	}
+        highscore = SaveLoadController.LoadScore();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -38,12 +42,19 @@ public class GameController : MonoBehaviour {
 
     void GameOver(int type)
     {
+        int score = scoreController.CheckScore;
+        if (score > highscore)
+        {
+            highscore = score;
+            SaveLoadController.SaveScore(highscore);
+        }
         if (type == 1)
-            gameOverPanel.GetComponentInChildren<Text>().text = "You Won";
+            gameOverPanel.GetComponentInChildren<Text>().text = "You Won\nScore: " + score + "\nHighscore: " + highscore;
         else
-            gameOverPanel.GetComponentInChildren<Text>().text = "You Lost";
+            gameOverPanel.GetComponentInChildren<Text>().text = "You Lost\nScore: " + score + "\nHighscore: " + highscore;
 
         gameOverPanel.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void Restart()
@@ -59,6 +70,7 @@ public class GameController : MonoBehaviour {
         this.GetComponent<GameUI>().Reset();
         baseHpController.Reset();
         waveSpawner.Reset();
+        Time.timeScale = 1;
         gameOverPanel.SetActive(false);
         if (isPaused)
             Pause();

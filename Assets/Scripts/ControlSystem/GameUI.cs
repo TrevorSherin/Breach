@@ -14,8 +14,11 @@ public class GameUI : MonoBehaviour {
     public State state { get; private set; }
     public GameObject towerMarker;
     public int money;
+    private int score;
+    private int highscore;
     private int startingMoney;
     private MoneyController moneyController;
+    private ScoreController scoreController;
     private BaseHpController baseHpController;
     private int baseHealth;
 
@@ -76,11 +79,18 @@ public class GameUI : MonoBehaviour {
         money -= moneyToUse;
     }
 
+    public void addScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+    }
+
 
     // Use this for initialization
     void Start ()
     {
+        score = 0;
         baseHealth = 0;
+        scoreController = GameObject.Find("ScoreInfo").GetComponent<ScoreController>();
         moneyController = GameObject.Find("GoldInfo").GetComponent<MoneyController>();
         baseHpController = GameObject.Find("BaseInfo").GetComponent<BaseHpController>();
         startingMoney = money = 500;
@@ -110,6 +120,11 @@ public class GameUI : MonoBehaviour {
         if (moneyController.CheckMoney != money)
         {
             moneyController.SetMoney(money);
+        }
+
+        if (scoreController.CheckScore != score)
+        {
+            scoreController.SetScore(score);
         }
 
         if (state == State.Building)

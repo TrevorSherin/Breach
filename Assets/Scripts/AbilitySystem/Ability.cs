@@ -17,7 +17,7 @@ public class Ability{
     {
         basicInfo = aBasicInfo;
         behaviours = new List<AbilityBehaviours>();
-        cooldown = 3f;
+        cooldown = 1f;
         requiresTarget = false;
         canCastOnSelf = false;
     }

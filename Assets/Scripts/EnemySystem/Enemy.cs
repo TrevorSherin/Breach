@@ -108,6 +108,7 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             GameObject.Find("GameCamera").GetComponent<GameUI>().addMoney(20);
+            GameObject.Find("GameCamera").GetComponent<GameUI>().addScore(25);
             Destroy(gameObject);
         }
     }

@@ -12,7 +12,7 @@ public class FireBall : Ability{
         :base(new BasicInfo(abilityName, abilityDescription))
     {
         this.Behaviours.Add(new Ranged(10f, 20f));
-        this.Behaviours.Add(new AreaOfEffect(2f, 2.3f, 50f));
+        this.Behaviours.Add(new AreaOfEffect(2f, 2.3f, 100f));
     }
 
 }

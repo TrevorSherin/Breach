@@ -83,12 +83,13 @@ public class WaveSpawner : MonoBehaviour {
 
     void WaveCompleted()
     {
-        Debug.Log("Wave Over.");
+        //Debug.Log("Wave Over.");
+        GameObject.Find("GameCamera").GetComponent<GameUI>().addScore(1500);
         state = SpawnState.Completed;
 
         if (nextWave + 1 > waves.Length - 1)
         {
-            Debug.Log("GameOver");
+            //Debug.Log("GameOver");
             gameWon = true;
             gameOver = true;
         }

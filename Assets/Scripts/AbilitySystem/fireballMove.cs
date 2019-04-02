@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class fireballMove : MonoBehaviour {
     private int enemiesHit;
+    public int damage;
 	// Use this for initialization
 	void Start () {
         enemiesHit = 0;
@@ -26,7 +27,7 @@ public class fireballMove : MonoBehaviour {
         if (other.gameObject.GetComponent<Enemy>() != null)
         {
             enemiesHit++;
-            other.gameObject.GetComponent<Enemy>().Hit(25);
+            other.gameObject.GetComponent<Enemy>().Hit(damage);
         }
     }
     
